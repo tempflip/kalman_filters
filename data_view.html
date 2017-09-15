@@ -1,0 +1,56 @@
+<html>
+
+<body>
+
+	<div>
+		<div id="out"></div>
+
+
+	</div>
+
+
+	<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyDID3PVprxGBMFStEYgMwOgDlY5ubN5fNc",
+	    authDomain: "geo1-7e6b6.firebaseapp.com",
+	    databaseURL: "https://geo1-7e6b6.firebaseio.com",
+	    projectId: "geo1-7e6b6",
+	    storageBucket: "geo1-7e6b6.appspot.com",
+	    messagingSenderId: "263774315428"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript">
+
+		function loadData(sessionName) {
+			var db = firebase.database();
+
+			db.ref(sessionName).once('value')
+				.then(function(r) {
+					var values = r.val();
+					
+
+					$('#out').append('timestamp,lat,long,ax,ay,az,acc');
+					
+
+					for (var k in values) {
+						var div = $("<div/>");
+						var p = values[k];
+						var s = p.timestamp + ',' + p.lat + ',' + p.long + ',' + p.ax + ',' + p.ay + ',' + p.az + ',' + p.acc
+						div.append(s);
+						$('#out').append(div);
+					};
+				});
+
+		}
+		loadData('Towork');
+
+
+	</script>
+
+</body>
+</html>
